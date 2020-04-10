@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.darklance.lancewebservice.mappers.ConnectionMapper">
+
+<resultMap type="Connection" id="Connection" >
+	<id property="id" column="ID"/>
+	<result property="name" column="Name"/>
+	<result property="description" column="Description"/>
+	<result property="url" column="URL"/>
+	<result property="user" column="User"/>
+	<result property="password" column="Password"/>
+	<result property="test" column="Test"/>
+	<result property="timeout" column="Timeout"/>
+	<association property="driver" column="Driver_ID" columnPrefix="Driver_" resultMap="Driver"/>
+</resultMap>
+
+<resultMap type="Driver" id="Driver">
+	<id property="id" column="ID"/>
+	<result property="name" column="Name"/>
+	<result property="description" column="Description"/>
+	<result property="driverClass" column="Class"/>
+</resultMap>
+
+<select id="selectAllConnections" resultMap="Connection">
+	SELECT 
+		Conn.ID, 
+		Conn.Name, 
+		Conn.Description, 
+		Conn.URL,
+		Conn.User,
+		Conn.Password,
+		Conn.Test,
+		Conn.Timeout,
+		Driver.ID as Driver_ID,
+		Driver.Name as Driver_Name,
+		Driver.Description as Driver_Description,
+		Driver.Class as Driver_Class
+	FROM
+		Connection as Conn
+	JOIN 
+		Driver as Driver 
+	ON 	Conn.Driver_ID = Conn.ID;
+		
+</select>
+</mapper>

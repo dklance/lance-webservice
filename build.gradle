@@ -1,0 +1,50 @@
+
+buildscript {
+	dependencies {
+		classpath 'org.mariadb.jdbc:mariadb-java-client:2.6.0'
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.2.6.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'org.flywaydb.flyway' version '6.3.3'
+}
+
+group = 'org.darklance'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '13'
+
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
+	implementation 'org.apache.commons:commons-lang3:3.10'
+	
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.6.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+
+
